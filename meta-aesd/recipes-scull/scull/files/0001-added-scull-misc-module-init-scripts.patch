@@ -1,0 +1,34 @@
+From 0a558376ed5165b3cd4bf52b96056931f9ce6c86 Mon Sep 17 00:00:00 2001
+From: Andy Pabst <andy.pabst16@gmail.com>
+Date: Tue, 9 Apr 2024 05:44:43 +0000
+Subject: [PATCH] added scull & misc-module init scripts
+
+---
+ scull/scull_init | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+ create mode 100644 scull/scull_init
+
+diff --git a/scull/scull_init b/scull/scull_init
+new file mode 100644
+index 0000000..90f596a
+--- /dev/null
++++ b/scull/scull_init
+@@ -0,0 +1,18 @@
++#! /bin/sh
++
++
++case "$1" in
++start)
++echo "Starting init script for Module Loading"
++start-stop-daemon -S -n init -a /bin/scull_load
++;;
++stop)
++echo "Removing user modules"
++start-stop-daemon -K -n scull_load
++start-stop-daemon -S -n init -a /bin/scull_unload
++;;
++*)
++echo "Usage: $0 {start|stop}"
++exit 1
++esac
++exit 0
