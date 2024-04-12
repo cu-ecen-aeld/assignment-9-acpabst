@@ -17,7 +17,7 @@ SRC_URI = "git://github.com/cu-ecen-aeld/assignment-7-acpabst.git;protocol=https
 
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
-SRCREV = "06bebd2d56725731c2fa15588f290bd8403ed128"
+SRCREV = "d2c5118960e81f5919717accab43836821466e23"
 
 S = "${WORKDIR}/git/misc-modules"
 
@@ -27,11 +27,11 @@ EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
 EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}/misc-modules"
 
 inherit update-rc.d
-FILES:${PN} += "${bindir}/hello.ko ${bindir}/faulty.ko ${sysconfdir}/init.d/module_init"
+FILES:${PN} += "${bindir}/module_load"
+FILES:${PN} += "${bindir}/module_unload"
+FILES:${PN} += "${sysconfdir}/init.d/module_init"
 INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME = "module_init"
-
-KERNEL_VERSION = "5.15.124-yocto-standard"
 
 do_configure () {
         :
@@ -45,7 +45,11 @@ do_install () {
         install -d ${D}${base_libdir}/modules/${KERNEL_VERSION}/
 	install -m 0755 ${S}/hello.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/
     	install -m 0755 ${S}/faulty.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/
-        
+       
+	install -d ${D}${bindir}
+	install -m 0755 ${S}/module_load ${D}${bindir}/ 
+	install -m 0755 ${S}/module_unload ${D}${bindir}/
+	
 	install -d ${D}${sysconfdir}/init.d
         install -m 0755 ${WORKDIR}/module_init ${D}${sysconfdir}/init.d
 }

@@ -1,15 +1,16 @@
 #! /bin/sh
 
-
 case "$1" in
 start)
 echo "Starting init script for Module Loading"
-start-stop-daemon -S -n init -a /bin/module_load -- hello
+start-stop-daemon -S -n init -a /usr/bin/module_load -- hello
+start-stop-daemon -S -n init -a /usr/bin/module_load -- faulty
 ;;
 stop)
 echo "Removing user modules"
 start-stop-daemon -K -n module_load
-start-stop-daemon -S -n init -a /bin/module_unload -- hello
+start-stop-daemon -S -n init -a /usr/bin/module_unload -- hello
+start-stop-daemon -S -n init -a /usr/bin/module_unload -- faulty
 ;;
 *)
 echo "Usage: $0 {start|stop}"

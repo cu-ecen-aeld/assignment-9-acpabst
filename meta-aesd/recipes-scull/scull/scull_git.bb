@@ -17,7 +17,7 @@ SRC_URI = "git://github.com/cu-ecen-aeld/assignment-7-acpabst.git;protocol=https
 
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
-SRCREV = "06bebd2d56725731c2fa15588f290bd8403ed128"
+SRCREV = "d2c5118960e81f5919717accab43836821466e23"
 
 S = "${WORKDIR}/git/scull"
 
@@ -25,10 +25,10 @@ inherit module
 MODULES_INSTALL_TARGET = "install"
 EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
 EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}/scull"
-KERNEL_VERSION = "5.15.124-yocto-standard"
 
 inherit update-rc.d
-FILES:${PN} += "${base_libdir}/modules/${KENERLDIR}/scull.ko ${sysconfdir}/init.d/scull_init"
+FILES:${PN} += "${bindir}/scull_load ${bindir}/scull_unload"
+FILES:${PN} += "${sysconfdir}/init.d/scull_init"
 INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME = "scull_init"
 
@@ -44,6 +44,10 @@ do_compile () {
 do_install () {
         install -d ${D}${base_libdir}/modules/${KERNEL_VERSION}/
         install -m 0755 ${S}/scull.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/
+
+	install -d ${D}${bindir}
+	install -m 0755 ${S}/scull_load ${D}${bindir}/
+	install -m 0755 ${S}/scull_unload ${D}${bindir}/
 
         install -d ${D}${sysconfdir}/init.d
         install -m 0755 ${WORKDIR}/scull_init ${D}${sysconfdir}/init.d
