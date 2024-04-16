@@ -17,7 +17,7 @@ SRC_URI = "git://github.com/cu-ecen-aeld/assignment-7-acpabst.git;protocol=https
 
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
-SRCREV = "d2c5118960e81f5919717accab43836821466e23"
+SRCREV = "84efa0a23681ff4c04e49a0c14ff4aea84b04cab"
 
 S = "${WORKDIR}/git/misc-modules"
 
