@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-acpabst;protocol=ssh;branch=master"
 
 PV = "1.0+git${SRCPV}"
-SRCREV = "20e73175b18a78a2f2224661df747294c633d52e"
+SRCREV = "4a673afdce55a302efc89630c105a7f25ca103e5"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
